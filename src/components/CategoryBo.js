@@ -9,7 +9,7 @@ export default function CategoryBo() {
        <SideBar/>
        </div>
        <div className="col-md-10">
-         
+         Category
        </div>
     </div>
    </div>

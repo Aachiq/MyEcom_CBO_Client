@@ -9,7 +9,7 @@ export default function ProductsBo() {
        <SideBar/>
        </div>
        <div className="col-md-10">
-         
+         Products
        </div>
     </div>
    </div>
