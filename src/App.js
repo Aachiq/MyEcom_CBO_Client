@@ -1,11 +1,14 @@
+import { BrowserRouter } from 'react-router-dom';
 import './App.css'
-import AdminDashLayout from './common/components/AdminDashLayout';
 import Header from './common/components/Header';
+import Routing from './Routing';
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <AdminDashLayout/>
+      <BrowserRouter>
+       <Header/>
+       <Routing/>
+      </BrowserRouter>
     </div>
   );
 }
