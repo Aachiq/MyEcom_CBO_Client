@@ -9,7 +9,7 @@ export default function OrdersBo() {
        <SideBar/>
        </div>
        <div className="col-md-10">
-         
+         Orders
        </div>
     </div>
    </div>
