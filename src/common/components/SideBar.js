@@ -1,28 +1,29 @@
 import React from 'react'
 import './SideBar.css'
+import { Link } from 'react-router-dom';
 export default function SideBar() {
   return (
     <div>
          <ul className="nav flex-column ">
             <li className="nav-item dropdown sidebar-list">
-              <a className="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#">Categories</a>
+              <Link className="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" to="/categoryBo">Categories</Link>
              <ul className="dropdown-menu w-100">
-              <li><a className="dropdown-item" href="#">List Products</a></li>
-              <li><a className="dropdown-item" href="#">Add New</a></li>
+              <li><Link className="dropdown-item" to="/category-bo">List Catgeories</Link></li>
+              <li><Link className="dropdown-item" to="#">Add New</Link></li>
              </ul>
             </li>
             <li className="nav-item dropdown sidebar-list">
-              <a className="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#">Products</a>
+              <Link className="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" to="/product-bo">Products</Link>
              <ul className="dropdown-menu w-100">
-              <li><a className="dropdown-item" href="#">List Categories</a></li>
-              <li><a className="dropdown-item" href="#">Add New</a></li>
+              <li><Link className="dropdown-item" to="/product-bo">List Products</Link></li>
+              <li><Link className="dropdown-item" to="#">Add New</Link></li>
              </ul>
             </li>
             <li className="nav-item dropdown sidebar-list">
-              <a className="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#">Orders</a>
+              <Link className="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" to="/orders-bo">Orders</Link>
              <ul className="dropdown-menu w-100">
-              <li><a className="dropdown-item" href="#">List Orders</a></li>
-              <li><a className="dropdown-item" href="#">Add New</a></li>
+              <li><Link className="dropdown-item" to="/orders-bo">List Orders</Link></li>
+              <li><Link className="dropdown-item" to="#">Add New</Link></li>
              </ul>
             </li>
 
