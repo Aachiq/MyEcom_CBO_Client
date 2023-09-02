@@ -3,7 +3,7 @@ import SideBar from './../common/components/SideBar';
 import { isAuthenticated } from '../common/helpers/authHelper';
 import { deleteProductService, getProductsService } from './../common/apiServices/productService';
 
-export default function ProductsBoBo() {
+export default function ProductsBo() {
   const [products,setProducts] = useState([]);
   // get userBo infos
   const {token,user} = isAuthenticated();
