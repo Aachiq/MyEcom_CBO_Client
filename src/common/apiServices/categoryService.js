@@ -19,7 +19,7 @@ export const deleteCategoriesService = async (userId,token,categoryId) => {
 
 export const searchCategoryService = (word) => {
   const bodyObj = {word: word};
-  return fetch(`${API_URL}/category/search/`,{
+  return fetch(`${API_URL}/category/search`,{
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -28,4 +28,10 @@ export const searchCategoryService = (word) => {
   })
   .then((res) => res.json())
   .then((data) => data.foundCategories)
+}
+
+export const paginationCategoryService = async (numPage) => {
+ return fetch(`${API_URL}/category/paginate?page=${numPage}`)
+        .then((res) => res.json())
+        .then((data) => data.paginatedCategory)
 }
