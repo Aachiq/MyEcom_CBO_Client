@@ -16,3 +16,16 @@ export const deleteCategoriesService = async (userId,token,categoryId) => {
   .then((res) => res.json())
   .then((data) => data.message)
 }
+
+export const searchCategoryService = (word) => {
+  const bodyObj = {word: word};
+  return fetch(`${API_URL}/category/search/`,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(bodyObj),
+  })
+  .then((res) => res.json())
+  .then((data) => data.foundCategories)
+}
