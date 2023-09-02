@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
-import { deleteCategoriesService, getCategoriesService, searchCategoryService } from './../common/apiServices/categoryService';
+import { deleteCategoriesService, getCategoriesService, paginationCategoryService, searchCategoryService } from './../common/apiServices/categoryService';
 import { isAuthenticated } from '../common/helpers/authHelper';
 
 export default function CategoryBo() {
   const [categories,setCategories] = useState([]);
+  const numberPages = 5;
+  const pagiNumbers = Array.from({ length: numberPages });
 
+  
   // get userBo infos
   const {token,user} = isAuthenticated();
+
   useEffect(() => {
-    getCategoriesService()
+    // getCategoriesService()
+    // .then((cats) => setCategories(cats))
+    // .catch((err) => console.log(err))
+    // we need pagination istead of getAllCatgegories because we want display just first 5
+    paginationCategoryService(1)
     .then((cats) => setCategories(cats))
     .catch((err) => console.log(err))
   },[])
@@ -26,6 +34,12 @@ export default function CategoryBo() {
   const handleSearchCategory = (event) => {
     searchCategoryService(event.target.value)
     .then((cats) => setCategories(cats))
+  }
+
+  const handlePagination = (index) => {
+    paginationCategoryService(index)
+    .then((cats) => setCategories(cats))
+    .catch((err) => console.log(err))
   }
 
   return (
@@ -83,7 +97,17 @@ export default function CategoryBo() {
           </tbody>
          </table>
          <div className="pagination">
-          
+          { pagiNumbers.map((_, index) => (
+             <div key={index}
+                  className='bg-secondary text-white'
+                  style={{ border: 'solid 1px',padding:'8px',marginRight: '5px', 
+                           cursor:'pointer'
+                  }}  
+                  onClick={() => handlePagination(index+1)}
+             > 
+             { index + 1 } 
+             </div>
+          ))}
          </div>
         </div>
         </div>
