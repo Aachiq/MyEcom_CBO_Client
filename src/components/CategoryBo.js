@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
-import { deleteCategoriesService, getCategoriesService } from './../common/apiServices/categoryService';
+import { deleteCategoriesService, getCategoriesService, searchCategoryService } from './../common/apiServices/categoryService';
 import { isAuthenticated } from '../common/helpers/authHelper';
 
 export default function CategoryBo() {
   const [categories,setCategories] = useState([]);
+
   // get userBo infos
   const {token,user} = isAuthenticated();
   useEffect(() => {
@@ -21,24 +22,30 @@ export default function CategoryBo() {
     })
     .catch((err) => console.log(err))
   }
+  
+  const handleSearchCategory = (event) => {
+    searchCategoryService(event.target.value)
+    .then((cats) => setCategories(cats))
+  }
+
   return (
     <div className='conrtainer-fluid'>
     <div className="row">
-       <div className="col-md-2 bg-black" style={{ height: '800px'}}>
+      <div className="col-md-2 bg-black" style={{ height: '800px'}}>
        <SideBar/>
-       </div>
-       <div className="col-md-10">
-        <div className="container">
-          
-        <div>
-         <h3>Filters & serach</h3>
-         <form action="">
-          <input type="text" className="form-control" />
-          <button className="btn btn-success">Search</button>
+      </div>
+      <div className="col-md-10">
+       <div className="container">
+        <div className='pt-2'>
+         <form style={{display: "flex", justifyContent:'end'}}>
+          <input type="text" id="search" style={{ width: '300px'}} 
+                 className="form-control" 
+                 onChange={handleSearchCategory}
+          />
+          <button type='submit' className="btn btn-success">Search</button>
          </form>
         </div>
-        <div>
-         <h6 className='text text-primary'>List Categories</h6>
+        <div className='mt-2'>
          <table className="table table-hover">
           <thead className="table-dark">
            <tr>
@@ -75,7 +82,9 @@ export default function CategoryBo() {
            })}
           </tbody>
          </table>
-         <h2>Pagination</h2>
+         <div className="pagination">
+          
+         </div>
         </div>
         </div>
        </div>
