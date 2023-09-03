@@ -16,7 +16,7 @@ export default function SideBar() {
               <Link className="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" to="/product-bo">Products</Link>
              <ul className="dropdown-menu w-100">
               <li><Link className="dropdown-item" to="/product-bo">List Products</Link></li>
-              <li><Link className="dropdown-item" to="#">Add New</Link></li>
+              <li><Link className="dropdown-item" to="/create-product">Add New</Link></li>
              </ul>
             </li>
             <li class="nav-item sidebar-list">
