@@ -28,15 +28,15 @@ export const searchProductService = (word) => {
     })
     .then((res) => res.json())
     .then((data) => data.foundProducts)
-  }
+}
   
-  export const paginationProductService = async (numPage) => {
+export const paginationProductService = async (numPage) => {
    return fetch(`${API_URL}/product/paginate?page=${numPage}`)
           .then((res) => res.json())
           .then((data) => data.paginatedProduct)
-  }
+}
   
-  export const createProductService = async (idUser,token,productObj) => {
+export const createProductService = async (idUser,token,productObj) => {
     return fetch(`${API_URL}/product/create/${idUser}`,{
       method: 'POST',
       headers: {
@@ -47,4 +47,4 @@ export const searchProductService = (word) => {
     })
     .then((res) => res.json())
     .then((data) => data.message)
-  }
+}

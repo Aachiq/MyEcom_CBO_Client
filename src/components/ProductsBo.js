@@ -58,7 +58,6 @@ export default function ProductsBo() {
          </form>
         </div>
         <div className='mt-2'>
-         <h6 className='text text-primary'>List Products</h6>
          <table className="table table-hover">
           <thead className="table-secondary">
            <tr>
