@@ -8,14 +8,15 @@ import { getCategoriesService } from '../common/apiServices/categoryService';
 export default function AddProduct() {
   const [product,setProduct] = useState({
     name:'',
-    desciption:'',
+    description:'',
     price : 0,
     quantity: 0,
     image : '',
-    idCategory: 0
+    id_category: 0
   });
   const [productCategories, setProductCategories] = useState([]);
-
+  const [formData, setFormData] = useState(new FormData());
+  
   // get auth user info
   const {token, user} = isAuthenticated();
   const navigate = useNavigate();
@@ -25,13 +26,20 @@ export default function AddProduct() {
   },[])
 
   const handleChangeCreateProduct = (event) => {
-    setProduct({...product,name : event.target.value});
+    const value = event.target.id === "image" ? event.target.files[0] : event.target.value;
+    
+    formData.set(event.target.id, value);
+
+    setProduct({...product,[event.target.id] : value});
   } 
   
   const handleSubmitCreateProduct = (event) => {
    event.preventDefault();
-   createProductService(user.id, token, product)
-   .then(() => navigate('/product-bo'))
+   createProductService(user.id, token, formData)
+   .then((msg) => {
+        console.log(msg);
+        navigate('/product-bo');
+    })
   }
 
   return (
@@ -48,6 +56,7 @@ export default function AddProduct() {
                     <label htmlFor="name">Name :</label>
                     <input type="text" id="name"
                            className="form-control"
+                           required
                            style={{ width: '500px'}}
                            onChange={handleChangeCreateProduct}
                     />
@@ -57,6 +66,7 @@ export default function AddProduct() {
                     <textarea cols="30" rows="5"
                               id="description"
                               className="form-control"
+                              required
                               style={{ width: '500px'}}
                               onChange={handleChangeCreateProduct}
                     >
@@ -66,21 +76,27 @@ export default function AddProduct() {
                     <label htmlFor="price">Price :</label>
                     <input type="text" id="price"
                            className="form-control"
+                           required
                            style={{ width: '500px'}}
                            onChange={handleChangeCreateProduct}
                     />
                 </div>
                 <div className="form-group">
                     <label htmlFor="qunatity">Qunatity :</label>
-                    <input type="number" id="qunatity"
+                    <input type="number" id="quantity"
                            className="form-control"
+                           required
                            style={{ width: '500px'}}
                            onChange={handleChangeCreateProduct}
                     />
                 </div>
                 <div className="form-group">
                     <label htmlFor="category">Category</label>
-                    <select name="categoryId" id="category" className='form-control'>
+                    <select name="categoryId" id="id_category" 
+                            className='form-control'
+                            required onChange={handleChangeCreateProduct} 
+                    >
+                        <option selected disabled>Choose category</option>
                         {productCategories && productCategories.map((item) => {
                             return (
                                 <>
@@ -94,6 +110,7 @@ export default function AddProduct() {
                     <label htmlFor="image">Image :</label>
                     <input type="file" id="image"
                            className="form-control"
+                           required
                            style={{ width: '500px'}}
                            onChange={handleChangeCreateProduct}
                     />
