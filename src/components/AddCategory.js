@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import SideBar from './../common/components/SideBar';
 import { createCategoryService } from './../common/apiServices/categoryService';
 import { isAuthenticated } from '../common/helpers/authHelper';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddCategory() {
   const [category,setCategory] = useState({
@@ -9,6 +10,7 @@ export default function AddCategory() {
   });
   // get auth user info
   const {token, user} = isAuthenticated();
+  const navigate = useNavigate();
 
   const handleChangeCreateCategory = (event) => {
     setCategory({...category,name : event.target.value});
@@ -17,7 +19,7 @@ export default function AddCategory() {
   const handleSubmitCreateCategory = (event) => {
    event.preventDefault();
    createCategoryService(user.id, token, category)
-   .then((msg) => console.log(msg))
+   .then(() => navigate('/category-bo'))
   }
 
   return (

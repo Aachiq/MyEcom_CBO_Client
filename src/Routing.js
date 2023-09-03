@@ -6,6 +6,7 @@ import CategoryBo from './components/CategoryBo';
 import OrdersBo from './components/OrdersBo';
 import Dashboard from './components/Dashboard';
 import AddCategory from './components/AddCategory';
+import AddProduct from './components/AddProduct';
 
 export default function Routing() {
   return (
@@ -16,6 +17,7 @@ export default function Routing() {
             <Route path="/product-bo" exact element={<ProductsBo/>}/>
             <Route path="/category-bo" exact element={<CategoryBo/>}/>
             <Route path="/create-category" exact element={<AddCategory/>}/>
+            <Route path="/create-product" exact element={<AddProduct/>}/>
             <Route path="/orders-bo" exact element={<OrdersBo/>}/>
        </Routes>
      </div>

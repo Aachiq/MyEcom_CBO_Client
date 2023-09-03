@@ -36,14 +36,14 @@ export const paginationProductService = async (numPage) => {
           .then((data) => data.paginatedProduct)
 }
   
-export const createProductService = async (idUser,token,productObj) => {
+export const createProductService = async (idUser,token,productFormDataObj) => {
     return fetch(`${API_URL}/product/create/${idUser}`,{
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(productObj),
+      body: JSON.stringify(productFormDataObj),
     })
     .then((res) => res.json())
     .then((data) => data.message)
