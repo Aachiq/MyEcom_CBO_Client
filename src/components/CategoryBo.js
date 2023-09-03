@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
-import { deleteCategoriesService, getCategoriesService, paginationCategoryService, searchCategoryService } from './../common/apiServices/categoryService';
+import { deleteCategoriesService, paginationCategoryService, searchCategoryService } from './../common/apiServices/categoryService';
 import { isAuthenticated } from '../common/helpers/authHelper';
 
 export default function CategoryBo() {
@@ -8,7 +8,6 @@ export default function CategoryBo() {
   const numberPages = 5;
   const pagiNumbers = Array.from({ length: numberPages });
 
-  
   // get userBo infos
   const {token,user} = isAuthenticated();
 

@@ -35,3 +35,16 @@ export const paginationCategoryService = async (numPage) => {
         .then((res) => res.json())
         .then((data) => data.paginatedCategory)
 }
+
+export const createCategoryService = (idUser,token,categoryObj) => {
+  return fetch(`${API_URL}/category/create/${idUser}`,{
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(categoryObj),
+  })
+  .then((res) => res.json())
+  .then((data) => data.message)
+}

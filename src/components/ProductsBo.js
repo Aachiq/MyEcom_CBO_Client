@@ -6,7 +6,7 @@ import { deleteProductService, getProductsService } from './../common/apiService
 export default function ProductsBo() {
   const [products,setProducts] = useState([]);
   // get userBo infos
-  const {token,user} = isAuthenticated();
+  const { token, user } = isAuthenticated();
   useEffect(() => {
     getProductsService()
     .then((prods) => setProducts(prods))
