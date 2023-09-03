@@ -40,10 +40,9 @@ export const createProductService = async (idUser,token,productFormDataObj) => {
     return fetch(`${API_URL}/product/create/${idUser}`,{
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify(productFormDataObj),
+      body: productFormDataObj,
     })
     .then((res) => res.json())
     .then((data) => data.message)
