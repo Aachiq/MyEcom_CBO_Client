@@ -40,7 +40,7 @@ export default function OrdersBo() {
         <div>
          <h6 className='text text-primary'>List Orders</h6>
          <table className="table table-hover">
-          <thead className="table-dark">
+          <thead className="table-secondary">
            <tr>
             <th>ID</th>
             <th>PHONE</th>

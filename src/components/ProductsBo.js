@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
 import { isAuthenticated } from '../common/helpers/authHelper';
-import { deleteProductService, getProductsService } from './../common/apiServices/productService';
+import { deleteProductService, getProductsService, paginationProductService, searchProductService } from './../common/apiServices/productService';
 
 export default function ProductsBo() {
   const [products,setProducts] = useState([]);
+  const numberPages = 5;
+  const pagiNumbers = Array.from({ length: numberPages });
+
   // get userBo infos
   const { token, user } = isAuthenticated();
+
   useEffect(() => {
-    getProductsService()
-    .then((prods) => setProducts(prods))
-    .catch((err) => console.log(err))
+    // getProductsService()
+    // .then((prods) => setProducts(prods))
+    // .catch((err) => console.log(err))
+    paginationProductService(1)
+     .then((prods) => setProducts(prods))
+     .catch((err) => console.log(err))
   },[])
 
   const deleteProduct = (productId) => {
@@ -21,6 +28,18 @@ export default function ProductsBo() {
     })
     .catch((err) => console.log(err))
   }
+
+  const handleSearchProduct = (event) => {
+    searchProductService(event.target.value)
+    .then((prods) => setProducts(prods))
+  }
+  
+  const handlePaginationProduct = (index) => {
+    paginationProductService(index)
+    .then((prods) => setProducts(prods))
+    .catch((err) => console.log(err))
+  }
+
   return (
     <div className='conrtainer-fluid'>
     <div className="row">
@@ -29,18 +48,19 @@ export default function ProductsBo() {
        </div>
        <div className="col-md-10">
         <div className="container">
-          
-        <div>
-         <h3>Filters & serach</h3>
-         <form action="">
-          <input type="text" className="form-control" />
-          <button className="btn btn-success">Search</button>
+        <div className='pt-2'>
+         <form style={{display: "flex", justifyContent:'end'}}>
+          <input type="text" id="search" style={{ width: '300px'}} 
+                 className="form-control" 
+                 onChange={handleSearchProduct}
+          />
+          <button type='submit' className="btn btn-success">Search</button>
          </form>
         </div>
-        <div>
+        <div className='mt-2'>
          <h6 className='text text-primary'>List Products</h6>
          <table className="table table-hover">
-          <thead className="table-dark">
+          <thead className="table-secondary">
            <tr>
             <th>ID</th>
             <th>NAME</th>
@@ -93,7 +113,21 @@ export default function ProductsBo() {
            })}
           </tbody>
          </table>
-         <h2>Pagination</h2>
+
+         <div className="pagination">
+          { pagiNumbers.map((_, index) => (
+             <div key={index}
+                  className='bg-secondary text-white'
+                  style={{ border: 'solid 1px',padding:'8px',marginRight: '5px', 
+                           cursor:'pointer'
+                  }}  
+                  onClick={() => handlePaginationProduct(index+1)}
+             > 
+             { index + 1 } 
+             </div>
+          ))}
+         </div>
+
         </div>
         </div>
        </div>

@@ -16,3 +16,35 @@ export const deleteProductService = async (idUser,token,idProduct) => {
     .then((res) => res.json())
     .then((data) => data.message)
 }
+
+export const searchProductService = (word) => {
+    const bodyObj = {word: word};
+    return fetch(`${API_URL}/product/search`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bodyObj),
+    })
+    .then((res) => res.json())
+    .then((data) => data.foundProducts)
+  }
+  
+  export const paginationProductService = async (numPage) => {
+   return fetch(`${API_URL}/product/paginate?page=${numPage}`)
+          .then((res) => res.json())
+          .then((data) => data.paginatedProduct)
+  }
+  
+  export const createProductService = async (idUser,token,productObj) => {
+    return fetch(`${API_URL}/product/create/${idUser}`,{
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(productObj),
+    })
+    .then((res) => res.json())
+    .then((data) => data.message)
+  }

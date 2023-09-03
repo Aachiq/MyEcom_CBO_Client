@@ -35,7 +35,7 @@ export default function CategoryBo() {
     .then((cats) => setCategories(cats))
   }
 
-  const handlePagination = (index) => {
+  const handlePaginationCategory = (index) => {
     paginationCategoryService(index)
     .then((cats) => setCategories(cats))
     .catch((err) => console.log(err))
@@ -60,7 +60,7 @@ export default function CategoryBo() {
         </div>
         <div className='mt-2'>
          <table className="table table-hover">
-          <thead className="table-dark">
+          <thead className="table-secondary">
            <tr>
             <th>ID</th>
             <th>NAME</th>
@@ -102,7 +102,7 @@ export default function CategoryBo() {
                   style={{ border: 'solid 1px',padding:'8px',marginRight: '5px', 
                            cursor:'pointer'
                   }}  
-                  onClick={() => handlePagination(index+1)}
+                  onClick={() => handlePaginationCategory(index+1)}
              > 
              { index + 1 } 
              </div>
