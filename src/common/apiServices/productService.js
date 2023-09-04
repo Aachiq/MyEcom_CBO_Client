@@ -6,6 +6,12 @@ export const getProductsService = async () => {
     .then((data) => data.products)
 }
 
+export const getOneProductService = async (idProduct) => {
+    return fetch(`${API_URL}/product/show?id=${idProduct}`)
+    .then((res) => res.json())
+    .then((data) => data.product)
+}
+
 export const deleteProductService = async (idUser,token,idProduct) => {
     return fetch(`${API_URL}/product/delete/${idUser}?id=${idProduct}`,{
         method: "DELETE",
@@ -46,4 +52,16 @@ export const createProductService = async (idUser,token,productFormDataObj) => {
     })
     .then((res) => res.json())
     .then((data) => data.message)
+}
+
+export const updateProductService = (idUser,token,productFormDataObj,idProduct) => {
+  return fetch(`${API_URL}/product/update/${idUser}?id=${idProduct}`,{
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    body: productFormDataObj,
+  })
+  .then((res) => res.json())
+  .then((data) => data.message)
 }
