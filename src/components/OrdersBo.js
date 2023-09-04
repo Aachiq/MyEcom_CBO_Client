@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
 import { isAuthenticated } from '../common/helpers/authHelper';
-import { deleteOrderService, getOrdersService, paginationOrderService, searchOrderService } from './../common/apiServices/ordersService';
+import { deleteOrderService, getOrdersService, paginationOrderService, searchOrderService, exportExcelService } from './../common/apiServices/ordersService';
 
 export default function OrdersBo() {
   const [orders,setOrders] = useState([]);
@@ -41,6 +41,11 @@ export default function OrdersBo() {
     .then((ords) => setOrders(ords))
     .catch((err) => console.log(err))
   }
+
+  const exportAndDowloadExcel = () => {
+    exportExcelService()
+  }
+
 
   return (
     <div className='conrtainer-fluid'>
@@ -109,7 +114,8 @@ export default function OrdersBo() {
           </tbody>
          </table>
 
-         <div className="pagination">
+       <div style={{ display:'flex', justifyContent: 'space-between' }}>
+       <div className="pagination">
           { pagiNumbers.map((_, index) => (
              <div key={index}
                   className='bg-secondary text-white'
@@ -122,6 +128,16 @@ export default function OrdersBo() {
              </div>
           ))}
          </div>
+         <div>
+          <button className='btn btn-warning'
+                  onClick={exportAndDowloadExcel} 
+          >
+            Export
+          </button>
+         </div>
+       </div>
+
+
 
         </div>
         </div>
