@@ -6,6 +6,12 @@ export const getCategoriesService = async () => {
   .then((data) => data.categories)
 }
 
+export const getOneCategoryService = async (id) => {
+ return fetch(`${API_URL}/category/show?id=${id}`)
+  .then((res) => res.json())
+  .then((data) => data.category)
+}
+
 export const deleteCategoriesService = async (userId,token,categoryId) => {
  return fetch(`${API_URL}/category/delete/${userId}?id=${categoryId}`,{
     method: "DELETE",
@@ -39,6 +45,19 @@ export const paginationCategoryService = async (numPage) => {
 export const createCategoryService = (idUser,token,categoryObj) => {
   return fetch(`${API_URL}/category/create/${idUser}`,{
     method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(categoryObj),
+  })
+  .then((res) => res.json())
+  .then((data) => data.message)
+}
+
+export const updateCategoryService = (idUser,token,categoryObj,idCatgeory) => {
+  return fetch(`${API_URL}/category/update/${idUser}?id=${idCatgeory}`,{
+    method: 'PUT',
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
