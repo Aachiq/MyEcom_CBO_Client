@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
 import { isAuthenticated } from '../common/helpers/authHelper';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createProductService, getOneProductService, updateProductService } from './../common/apiServices/productService';
+import { getOneProductService, updateProductService } from './../common/apiServices/productService';
 import { getCategoriesService } from '../common/apiServices/categoryService';
 
 export default function UpdateProduct() {
@@ -37,12 +37,9 @@ export default function UpdateProduct() {
   
   const handleSubmitUpdateProduct = (event) => {
    event.preventDefault();
-   console.log(updatedProduct);
-   console.log(formData);
    updateProductService(user.id, token, formData, id)
-   .then((msg) => {
-        console.log(msg);
-        // navigate('/product-bo');
+   .then(() => {
+        navigate('/product-bo');
     })
   }
 
