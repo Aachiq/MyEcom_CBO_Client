@@ -101,8 +101,9 @@ export default function UpdateProduct() {
                             className='form-control'
                             required 
                             onChange={handleChangeUpdateProduct} 
+                            value={updatedProduct.id_category}
                     >
-                        <option selected disabled>Choose category</option>
+                        <option disabled>Choose category</option>
                         {productCategories && productCategories.map((item) => {
                             return (
                                 <>
