@@ -60,3 +60,9 @@ export const searchOrderService = async (word) => {
       console.error('Error generating Excel:', error);
     });
   }
+
+export const getOrdersByPaymentTypeService = (payType) => {
+  return fetch(`${API_URL}/order/filter?payType=${payType}`)
+  .then((res) =>res.json())
+  .then((data) => data.ordersPaymenType)
+}
