@@ -65,3 +65,9 @@ export const updateProductService = (idUser,token,productFormDataObj,idProduct) 
   .then((res) => res.json())
   .then((data) => data.message)
 }
+
+export const getProductsByCategory = async (id) => {
+  return fetch(`${API_URL}/product/show/${id}`)
+  .then((res) => res.json())
+  .then((data) => data.products)
+}
