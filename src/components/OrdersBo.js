@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
 import { isAuthenticated } from '../common/helpers/authHelper';
-import { deleteOrderService, getOrdersService, paginationOrderService, searchOrderService, exportExcelService } from './../common/apiServices/ordersService';
+import { deleteOrderService, getOrdersService, paginationOrderService, searchOrderService, exportExcelService, getOrdersByPaymentTypeService } from './../common/apiServices/ordersService';
 
 export default function OrdersBo() {
   const [orders,setOrders] = useState([]);
@@ -46,6 +46,10 @@ export default function OrdersBo() {
     exportExcelService()
   }
 
+  const handleChangeOrderFilterPaymentType = (event) => {
+   getOrdersByPaymentTypeService(event.target.value)
+   .then((ords) => setOrders(ords))
+  }
 
   return (
     <div className='conrtainer-fluid'>
@@ -63,6 +67,35 @@ export default function OrdersBo() {
               />
               <button type='submit' className="btn btn-success">Search</button>
             </form>
+            <div>
+              <h6 className='text text-primary'>Filters :</h6>
+              <form action="" className='d-flex'>
+                <div className="form-group p-1" >
+                  <label htmlFor="cash">Cash</label>
+                  <input type="radio" 
+                         name="paymentType" 
+                         id="cash"
+                        // logically i should have Payment-Type from Table 'API'.
+                         value="cash" 
+                         required 
+                         onChange={handleChangeOrderFilterPaymentType}
+                        style={{ marginLeft:'5px' }}    
+                  />                  
+                </div>
+                <div className='form-group p-1'>
+                  <label htmlFor="online">Online</label>
+                  <input type="radio" 
+                         name="paymentType" 
+                         id="online"
+                        // logically i should have Payment-Type from Table 'API'.
+                         value="online" 
+                         required 
+                         onChange={handleChangeOrderFilterPaymentType} 
+                        style={{ marginLeft:'5px' }}   
+                  />
+                </div>
+              </form>
+            </div>
           </div>
         <div className='mt-2'>
          <table className="table table-hover">
