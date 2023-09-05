@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
 import { isAuthenticated } from '../common/helpers/authHelper';
-import { deleteProductService, getProductsByCategory, getProductsService, paginationProductService, searchProductService } from './../common/apiServices/productService';
+import { deleteProductService, getProductsByCategory, getProductsService, paginationProductService, searchProductService, getProductsByPrice } from './../common/apiServices/productService';
 import { Link } from 'react-router-dom';
 import { getCategoriesService } from './../common/apiServices/categoryService';
 
@@ -11,6 +11,21 @@ export default function ProductsBo() {
 
   const numberPages = 5;
   const pagiNumbers = Array.from({ length: numberPages });
+
+  const prices = [
+    {
+      label : "0$ to 50$",
+      value : [0,50]
+    },
+    {
+      label : "50$ to 100$",
+      value : [50,100]
+    },
+    {
+      label : "over 100$",
+      value : [100,999999]
+    }
+  ]
 
   // get userBo infos
   const { token, user } = isAuthenticated();
@@ -52,6 +67,14 @@ export default function ProductsBo() {
     .then((prods) => setProducts(prods) )
   }
 
+  const handleChangeProductFilterPrice = (event) => {
+    // console.log(event.target.value) // 0,50
+    // console.log(event.target.value.split(',')) [0,50]
+    const priceRange = event.target.value.split(','); // get array from string
+    // BODY if takes array ,it shoul be inside object ,so everything inside object.
+    const bodyObj = { priceRange }; 
+    getProductsByPrice(bodyObj).then((prods) => setProducts(prods))
+  }
   return (
     <div className='conrtainer-fluid'>
     <div className="row">
@@ -69,26 +92,48 @@ export default function ProductsBo() {
           <button type='submit' className="btn btn-success">Search</button>
          </form>
          <div>
-          <h6 className='text text-primary'>Filters :</h6>
-          <form action="">
-          <div className="form-group d-flex" >
-                    <label htmlFor="category">Category :</label>
-                    <select name="categoryId" id="id_category" 
-                            className='form-control'
-                            required 
-                            style={{ width: '300px'}}
-                            onChange={handleChangeProductFilterCategory} 
-                    >
-                        <option selected disabled>Choose category</option>
-                        {productCategories && productCategories.map((item) => {
-                            return (
-                                <>
-                                 <option value={item.id}>{item.name}</option>
-                                </>
-                            )
-                        })}
-                    </select>
-                </div>
+          <h6>Filters :</h6>
+          <form action="" className='p-2'>
+             <div className="form-group d-flex" >
+                  <label htmlFor="category">Category :</label>
+                  <select name="categoryId" id="id_category" 
+                          className='form-control'
+                          required 
+                          style={{ width: '300px'}}
+                          onChange={handleChangeProductFilterCategory} 
+                  >
+                      <option selected disabled>Choose category</option>
+                      {productCategories && productCategories.map((item) => {
+                          return (
+                              <>
+                                <option value={item.id}>{item.name}</option>
+                              </>
+                          )
+                      })}
+                  </select>
+             </div>
+             <div className='d-flex'>
+             <label htmlFor="">Price :</label>
+             {
+              prices.map((item) => {
+                return (
+                  <>
+                    <div className="form-group p-1" >
+                      <label htmlFor={item.label}>{item.label}</label>
+                       <input type="radio" 
+                              name="price1" 
+                              id={item.label}
+                              value={item.value} 
+                              required 
+                              onChange={handleChangeProductFilterPrice}
+                              style={{ marginLeft:'5px' }}    
+                       />                  
+                    </div>
+                  </>
+                )
+              })
+             }
+             </div>
           </form>
          </div>
         </div>

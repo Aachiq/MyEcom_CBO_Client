@@ -71,3 +71,15 @@ export const getProductsByCategory = async (id) => {
   .then((res) => res.json())
   .then((data) => data.products)
 }
+
+export const getProductsByPrice = async (bodyObj) => {
+  return fetch(`${API_URL}/product/show/filter-price`,{
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(bodyObj) 
+  })
+  .then((res) => res.json())
+  .then((data) => data.products)
+}
