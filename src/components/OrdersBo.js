@@ -1,13 +1,60 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
 import { isAuthenticated } from '../common/helpers/authHelper';
-import { deleteOrderService, getOrdersService, paginationOrderService, searchOrderService, exportExcelService, getOrdersByPaymentTypeService } from './../common/apiServices/ordersService';
+import { deleteOrderService, getOrdersService, paginationOrderService, searchOrderService, exportExcelService, getOrdersByPaymentTypeService, getOrdersByDateService } from './../common/apiServices/ordersService';
 
 export default function OrdersBo() {
   const [orders,setOrders] = useState([]);
   const [numberPages,setNumberPages] = useState(0);
 
   const pagiNumbers = Array.from({ length: numberPages });
+
+  const datesFilter = [
+    {
+      label : "Any",
+      value : "ANY",
+    },
+    {
+      label : "Today",
+      value : "TODAY",
+    },
+    {
+      label : "Yesterday",
+      value : "YESTERDAY",
+    },
+    {
+      label : "Current week",
+      value : "CURRENT_WEEK",
+    },
+    {
+      label : "Last week",
+      value : "LAST_WEEK",
+    },
+    {
+      label : "Current month",
+      value : "CURRENT_MONTH",
+    },
+    {
+      label : "Last month",
+      value : "LAST_MONTH",
+    },
+    {
+      label : "Current year",
+      value : "CURRENT_YEAR",
+    },
+    {
+      label : "Last year",
+      value : "LAST_YEAR",
+    },
+    {
+      label : "over 2020",
+      value : "OVER_2020"
+    },
+    {
+      label : "under 2020",
+      value : "UNDER_2020"
+    }
+  ]
 
   // get userBo infos
   const {token,user} = isAuthenticated();
@@ -50,6 +97,17 @@ export default function OrdersBo() {
    getOrdersByPaymentTypeService(event.target.value)
    .then((ords) => setOrders(ords))
   }
+  
+  const handleChangeOrderFilterDate = (event) => {
+    const dateObj = {
+      filterDate : event.target.value
+    }
+    getOrdersByDateService(dateObj).then((ords) => setOrders(ords));
+  }
+
+  const handleChangeOrderFilterCustomDate = (event) => {
+    alert(event.target.value)
+  }
 
   return (
     <div className='conrtainer-fluid'>
@@ -69,13 +127,15 @@ export default function OrdersBo() {
             </form>
             <div>
               <h6 className='text text-primary'>Filters :</h6>
-              <form action="" className='d-flex'>
-                <div className="form-group p-1" >
+              <form action="" className=''>
+               <div className="d-flex">
+                <label htmlFor="">Payment :</label>
+               <div className="form-group p-1" >
                   <label htmlFor="cash">Cash</label>
                   <input type="radio" 
                          name="paymentType" 
                          id="cash"
-                        // logically i should have Payment-Type from Table 'API'.
+                        // logically I should have Payment-Type from Table 'API'.
                          value="cash" 
                          required 
                          onChange={handleChangeOrderFilterPaymentType}
@@ -87,11 +147,41 @@ export default function OrdersBo() {
                   <input type="radio" 
                          name="paymentType" 
                          id="online"
-                        // logically i should have Payment-Type from Table 'API'.
                          value="online" 
                          required 
                          onChange={handleChangeOrderFilterPaymentType} 
                         style={{ marginLeft:'5px' }}   
+                  />
+                </div>
+               </div>
+               <div className='d-flex'>
+                <label htmlFor="">Date :</label>
+                <div className='form-group p-1'>
+                  {datesFilter.map((item) => {
+                    return (
+                      <>
+                        <label htmlFor={item.label}>{item.label}</label>
+                        <input type="checkbox" 
+                              name="dateOrder" 
+                              id={item.label}
+                              value={item.value}
+                              required 
+                              onChange={handleChangeOrderFilterDate}
+                              style={{ marginRight: '5px' }} 
+                        />
+                      </>
+                    )
+                  })}
+                </div>
+               </div>
+               <div className='custom-date'>
+                  <input 
+                        type="date" 
+                        className='form-control'
+                        style={{ width: '200px' }}
+                        name="customDate" 
+                        required 
+                        onChange={handleChangeOrderFilterCustomDate} 
                   />
                 </div>
               </form>

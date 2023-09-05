@@ -66,3 +66,14 @@ export const getOrdersByPaymentTypeService = (payType) => {
   .then((res) =>res.json())
   .then((data) => data.ordersPaymenType)
 }
+export const getOrdersByDateService = (dateObj) => {
+  return fetch(`${API_URL}/order/filter-date`,{
+    method: "POST",
+    headers: {
+      "Content-Type" : "application/json"
+    },
+    body: JSON.stringify(dateObj)
+  })
+  .then((res) =>res.json())
+  .then((data) => data.ordersByDate)
+}
