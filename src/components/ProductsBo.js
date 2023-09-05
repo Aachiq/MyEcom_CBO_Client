@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from './../common/components/SideBar';
 import { isAuthenticated } from '../common/helpers/authHelper';
-import { deleteProductService, getProductsService, paginationProductService, searchProductService } from './../common/apiServices/productService';
+import { deleteProductService, getProductsByCategory, getProductsService, paginationProductService, searchProductService } from './../common/apiServices/productService';
 import { Link } from 'react-router-dom';
+import { getCategoriesService } from './../common/apiServices/categoryService';
 
 export default function ProductsBo() {
   const [products,setProducts] = useState([]);
+  const [productCategories, setProductCategories] = useState([]);
+
   const numberPages = 5;
   const pagiNumbers = Array.from({ length: numberPages });
 
@@ -19,6 +22,9 @@ export default function ProductsBo() {
     paginationProductService(1)
      .then((prods) => setProducts(prods))
      .catch((err) => console.log(err))
+     // get categories
+     getCategoriesService().then((cats) => setProductCategories(cats))
+     
   },[])
 
   const deleteProduct = (productId) => {
@@ -41,6 +47,11 @@ export default function ProductsBo() {
     .catch((err) => console.log(err))
   }
 
+  const handleChangeProductFilterCategory = (event) => {
+    getProductsByCategory(event.target.value)
+    .then((prods) => setProducts(prods) )
+  }
+
   return (
     <div className='conrtainer-fluid'>
     <div className="row">
@@ -57,6 +68,29 @@ export default function ProductsBo() {
           />
           <button type='submit' className="btn btn-success">Search</button>
          </form>
+         <div>
+          <h6 className='text text-primary'>Filters :</h6>
+          <form action="">
+          <div className="form-group d-flex" >
+                    <label htmlFor="category">Category :</label>
+                    <select name="categoryId" id="id_category" 
+                            className='form-control'
+                            required 
+                            style={{ width: '300px'}}
+                            onChange={handleChangeProductFilterCategory} 
+                    >
+                        <option selected disabled>Choose category</option>
+                        {productCategories && productCategories.map((item) => {
+                            return (
+                                <>
+                                 <option value={item.id}>{item.name}</option>
+                                </>
+                            )
+                        })}
+                    </select>
+                </div>
+          </form>
+         </div>
         </div>
         <div className='mt-2'>
          <table className="table table-hover">
